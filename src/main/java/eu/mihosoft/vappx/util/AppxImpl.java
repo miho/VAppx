@@ -1,7 +1,8 @@
 package eu.mihosoft.vappx.util;
 
-import eu.mihosoft.vappx.vappxshell.VAppxShell;
+import eu.mihosoft.vappx.vappxtool.VAppx;
 import eu.mihosoft.vappx.vappxdist.AppxDist;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AppxImpl implements VAppxShell {
+public class AppxImpl implements VAppx {
 
     private static File executableFile;
     private static File appxRootPath;
@@ -62,12 +63,12 @@ public class AppxImpl implements VAppxShell {
                     = IOUtil.newConfigurationFile(new File(base, "config.xml"));
             confFile.load();
             String timestamp = confFile.getProperty("timestamp");
-            File ugFolder = new File(distDir.toFile(), "ug");
+            File appXFolder = new File(distDir.toFile(), "bin");
 
             String timestampFromDist;
 
             try {
-                Class<?> buildInfoCls = Class.forName("eu.mihosoft.vappx.vappxdist.BuildInfo");
+                Class<?> buildInfoCls = Class.forName("eu.mihosoft.vappx.appxdist.BuildInfo");
                 Field timestampFromDistField = buildInfoCls.getDeclaredField("TIMESTAMP");
                 timestampFromDistField.setAccessible(true);
                 timestampFromDist = (String) timestampFromDistField.get(buildInfoCls);
@@ -84,7 +85,7 @@ public class AppxImpl implements VAppxShell {
             }
 
             // if no previous timestamp exists or if no appx folder exists
-            if (timestamp == null || !ugFolder.exists()) {
+            if (timestamp == null || !appXFolder.exists()) {
                 System.out.println(
                         " -> installing appx to \"" + distDir + "\"");
                 AppxDist.extractTo(distDir.toFile());
@@ -156,9 +157,9 @@ public class AppxImpl implements VAppxShell {
      * @param arguments arguments
      * @param wd working directory
      * @param waitFor indicates whether to wait for process execution
-     * @return appx process
+     * @return appx shell
      */
-    public static Process execute(boolean waitFor, File wd, String... arguments) {
+    public static AppxImpl execute(boolean waitFor, File wd, String... arguments) {
 
         initialize();
 
@@ -185,7 +186,7 @@ public class AppxImpl implements VAppxShell {
             throw new RuntimeException("Error while executing appx", ex);
         }
 
-        return proc;
+        return new AppxImpl(proc,wd);
     }
 
     @Override
@@ -219,7 +220,7 @@ public class AppxImpl implements VAppxShell {
 
         if (executableFile == null || !executableFile.isFile()) {
 
-            appxRootPath = new File(dir.toFile(), "appx/bin");
+            appxRootPath = new File(dir.toFile(), "bin");
 
             String executableName = "appx";
 

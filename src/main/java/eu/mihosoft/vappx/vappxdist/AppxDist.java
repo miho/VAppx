@@ -15,13 +15,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * Appx distribution class.
+ * VAppx distribution class.
  *
  * @author Michael Hoffer <info@michaelhoffer.de>
  */
 public class AppxDist {
 
-    public static final String RESOURCE_PACKAGE = "/eu/mihosoft/vappx/vappxdist";
+    public static final String RESOURCE_PACKAGE = "/eu/mihosoft/vappx/appxdist";
 
     public static String getResourcePath() {
         return RESOURCE_PACKAGE
