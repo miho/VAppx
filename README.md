@@ -6,6 +6,8 @@ Appx utility library to generate Appx installation packages
 
 ## Basic Usage
 
+To use this library add the binary [appx-dist](https://github.com/miho/appx-dist) dependency: [ ![Download](https://api.bintray.com/packages/miho/Appx/appx-dist/images/download.svg) ](https://bintray.com/miho/Appx/appx-dist/_latestVersion)
+
 Creating an `.appx` package:
 
 ```java
