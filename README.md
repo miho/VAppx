@@ -2,7 +2,7 @@
 
 [ ![Download](https://api.bintray.com/packages/miho/Appx/VAppx/images/download.svg) ](https://bintray.com/miho/Appx/VAppx/_latestVersion)
 
-Appx utility library to generate Appx installation packages
+Appx utility library to generate Appx installation packages for the Windows 10 App Store.
 
 ## Basic Usage
 
